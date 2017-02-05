@@ -1,0 +1,5 @@
+Assets/Meshes.meta
+*.meta
+Library/assetDatabase3
+Libraty/metadata/*.*
+Libraty/ShaderCache/*.*
