@@ -174,7 +174,6 @@ class GeoPainterEditor extends Editor {
 
 					myLibrary.Add(null);
 					currentGroupScript.myLibraryBuiltIn = myLibrary.ToBuiltin(GameObject);
-					myLibrary.Add(null);
 				}
 				
 				for(x = 0; x < myLibrary.length; x++) {
@@ -189,6 +188,7 @@ class GeoPainterEditor extends Editor {
 
 							if(GUILayout.Button ("REMOVE")) {
 								myLibrary.RemoveAt(x);
+								currentGroupScript.objProb.RemoveAt(x);
 								currentGroupScript.myLibraryBuiltIn = myLibrary.ToBuiltin(GameObject);
 								break;
 							}
@@ -604,7 +604,6 @@ class GeoPainterEditor extends Editor {
 			}
 
 			///
-
 			var objToInst = currentGroupScript.myLibraryBuiltIn[parseInt(myRandom)];
 			//var myNewObject = EditorUtility.InstantiatePrefab(objToInst);
 			var myNewObject = PrefabUtility.InstantiatePrefab(objToInst);

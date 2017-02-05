@@ -8,7 +8,6 @@ class GeoPainterGroup extends MonoBehaviour
 	var myPointsList : List.<GeoPainterPoint> = new List.<GeoPainterPoint>();
 
 	var objProb: List.<float> = new List.<float>([1.0f]);
-
 	//objProb.Add(1.0f);
 
 	//var objProb = new Array(1.0f, 1.0f, 1.0f, 1.0f);
