@@ -168,9 +168,13 @@ class GeoPainterEditor extends Editor {
 				//Elements
 				var x : int = 0;
 				if(GUILayout.Button ("ADD OBJECT")) {
+				///
+					currentGroupScript.objProb.Add(1.0f);
+				///
+
 					myLibrary.Add(null);
 					currentGroupScript.myLibraryBuiltIn = myLibrary.ToBuiltin(GameObject);
-					
+					myLibrary.Add(null);
 				}
 				
 				for(x = 0; x < myLibrary.length; x++) {
@@ -178,7 +182,11 @@ class GeoPainterEditor extends Editor {
 						EditorGUILayout.BeginVertical();
 						EditorGUILayout.LabelField("Object #"+x+" :");
 							myLibrary[x] = EditorGUILayout.ObjectField(myLibrary[x], typeof(GameObject),false);
-							
+
+							///
+							currentGroupScript.objProb[x] = EditorGUILayout.Slider("Density: ",currentGroupScript.objProb[x], 0.0f, 1.0f);
+							///
+
 							if(GUILayout.Button ("REMOVE")) {
 								myLibrary.RemoveAt(x);
 								currentGroupScript.myLibraryBuiltIn = myLibrary.ToBuiltin(GameObject);
@@ -496,7 +504,9 @@ class GeoPainterEditor extends Editor {
 	{
 		myTempScript = myGroups[copyFromIndex].GetComponent("GeoPainterGroup");
 		
-		
+
+		currentGroupScript.objProb = myTempScript.objProb;
+
 		currentGroupScript.rndSeed = myTempScript.rndSeed;
 		currentGroupScript.offPosX  = myTempScript.offPosX;
 		currentGroupScript.offPosY  = myTempScript.offPosY;
@@ -557,7 +567,44 @@ class GeoPainterEditor extends Editor {
 		{
 			DestroyImmediate(element.go);
 			
-			var myRandom = Random.Range(0, currentGroupScript.myLibraryBuiltIn.length);
+			///var myRandom = Random.Range(0, currentGroupScript.myLibraryBuiltIn.length);
+
+			///
+			var myRandom: int;
+			var myRandomFloat: float;
+
+			var totalProb: float = 0.0f;
+			var cumulateGrowthProb = new Array();
+
+			for (i = 0; i < currentGroupScript.objProb.Count; i++)
+			{
+				totalProb += currentGroupScript.objProb[i];
+				cumulateGrowthProb.push(totalProb);
+			}
+
+			myRandomFloat = Random.Range(0.0f, 1.0f);
+			myRandomFloat *= totalProb;
+
+			for (i = 0; i < currentGroupScript.objProb.Count; i++)
+			{
+				if (i == 0)
+				{
+					if( myRandomFloat > 0 && myRandomFloat <= cumulateGrowthProb[i])
+					{
+						myRandom = 0;
+					}
+				}
+				else
+				{
+					if( myRandomFloat > cumulateGrowthProb[i-1] && myRandomFloat <= cumulateGrowthProb[i])
+					{
+						myRandom = i;
+					}
+				}
+			}
+
+			///
+
 			var objToInst = currentGroupScript.myLibraryBuiltIn[parseInt(myRandom)];
 			//var myNewObject = EditorUtility.InstantiatePrefab(objToInst);
 			var myNewObject = PrefabUtility.InstantiatePrefab(objToInst);
@@ -679,7 +726,42 @@ class GeoPainterEditor extends Editor {
 				if(target.bibSortIndex == 0)
 				{
 					//Random
-					var myRandom = Random.Range(0, currentGroupScript.myLibraryBuiltIn.length);
+
+					///
+					var myRandom: int;
+					var myRandomFloat: float;
+
+					var totalProb: float = 0.0f;
+					var cumulateGrowthProb = new Array();
+
+					for (i = 0; i < currentGroupScript.objProb.Count; i++)
+					{
+						totalProb += currentGroupScript.objProb[i];
+						cumulateGrowthProb.push(totalProb);
+					}
+
+					myRandomFloat = Random.Range(0.0f, 1.0f);
+					myRandomFloat *= totalProb;
+
+					for (i = 0; i < currentGroupScript.objProb.Count; i++)
+					{
+						if (i == 0)
+						{
+							if( myRandomFloat > 0 && myRandomFloat <= cumulateGrowthProb[i])
+							{
+								myRandom = 0;
+							}
+						}
+						else
+						{
+							if( myRandomFloat > cumulateGrowthProb[i-1] && myRandomFloat <= cumulateGrowthProb[i])
+							{
+								myRandom = i;
+							}
+						}
+					}
+					///
+
 					objToInst = currentGroupScript.myLibraryBuiltIn[parseInt(myRandom)];
 				}
 				if(target.bibSortIndex == 1)
@@ -843,36 +925,42 @@ class GeoPainterEditor extends Editor {
 			var e = Event.current;
 			//Hanldes
 			drawHandles();
-			if(e.keyCode == KeyCode.D && !e.shift) {
+			if(e.keyCode == KeyCode.D && !e.shift)
+			{
 				target.myDistance += 0.01 ;
 				Repaint();
 				HandleUtility.Repaint();
 			}
-			if (e.keyCode == KeyCode.D && e.shift){
+			if (e.keyCode == KeyCode.D && e.shift)
+			{
 				target.myDistance -= 0.01;
 				if(target.myDistance <=0)
 				target.myDistance = 0;
 				Repaint();
 				HandleUtility.Repaint();
 			}
-			if(e.keyCode == KeyCode.S && !e.shift) {
+			if(e.keyCode == KeyCode.S && !e.shift)
+			{
 				target.mySpray += 0.01 ;
 				Repaint();
 				HandleUtility.Repaint();
 			}
-			if (e.keyCode == KeyCode.S && e.shift){
+			if (e.keyCode == KeyCode.S && e.shift)
+			{
 				target.mySpray -= 0.01;
 				if(target.mySpray <=0)
 				target.mySpray = 0;
 				Repaint();
 				HandleUtility.Repaint();
 			}
-			if(e.keyCode == KeyCode.C && !e.shift) {
+			if(e.keyCode == KeyCode.C && !e.shift)
+			{
 				target.myDelete += 0.01 ;
 				Repaint();
 				HandleUtility.Repaint();
 			}
-			if (e.keyCode == KeyCode.C && e.shift){
+			if (e.keyCode == KeyCode.C && e.shift)
+			{
 				target.myDelete -= 0.01;
 				if(target.myDelete <=0)
 				target.myDelete = 0;

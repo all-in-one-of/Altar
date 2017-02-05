@@ -47,8 +47,6 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Bezier\Editor\BezierPathEditor.cs" />
-     <Compile Include="Assets\CAPA Free - The Camera Path Animator\Editor\CameraPathAnimatorEditor.cs" />
-     <None Include="Assets\CAPA Free - The Camera Path Animator\Readme.txt" />
      <None Include="Assets\Bezier\readme.txt" />
      <None Include="Assets\GeoPainter\readme.txt" />
  <Reference Include="Assembly-UnityScript">

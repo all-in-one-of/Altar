@@ -6,7 +6,14 @@ class GeoPainterGroup extends MonoBehaviour
 	
 	@SerializeField
 	var myPointsList : List.<GeoPainterPoint> = new List.<GeoPainterPoint>();
-	
+
+	var objProb: List.<float> = new List.<float>([1.0f]);
+
+	//objProb.Add(1.0f);
+
+	//var objProb = new Array(1.0f, 1.0f, 1.0f, 1.0f);
+
+
 	//Position
 	var offPosX : float = 0.0;
 	var offPosY : float = 0.0;

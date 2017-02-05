@@ -48,7 +48,6 @@
   <ItemGroup>
      <Compile Include="Assets\Plugins\Bezier\Bezier.cs" />
      <Compile Include="Assets\Plugins\Bezier\BezierPath.cs" />
-     <None Include="Assets\CAPA Free - The Camera Path Animator\Readme.txt" />
      <None Include="Assets\Bezier\readme.txt" />
      <None Include="Assets\GeoPainter\readme.txt" />
  <Reference Include="UnityEngine.Advertisements">

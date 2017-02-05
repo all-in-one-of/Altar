@@ -47,13 +47,8 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Bezier\Example\BezierController.cs" />
-     <Compile Include="Assets\CAPA Free - The Camera Path Animator\Basic\List.cs" />
-     <Compile Include="Assets\CAPA Free - The Camera Path Animator\Source\CameraPathAnimator.cs" />
-     <Compile Include="Assets\CAPA Free - The Camera Path Animator\Source\CameraPathAnimatorLibrary.cs" />
-     <Compile Include="Assets\CAPA Free - The Camera Path Animator\Source\DepthOfFieldWrapper.cs" />
      <Compile Include="Assets\Script\Character_Controller.cs" />
      <Compile Include="Assets\Script\SplineScript.cs" />
-     <None Include="Assets\CAPA Free - The Camera Path Animator\Readme.txt" />
      <None Include="Assets\Bezier\readme.txt" />
      <None Include="Assets\GeoPainter\readme.txt" />
  <Reference Include="UnityEngine.Advertisements">
