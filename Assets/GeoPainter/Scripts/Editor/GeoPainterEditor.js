@@ -190,6 +190,13 @@ class GeoPainterEditor extends Editor {
 
 							///
 							currentGroupScript.objProb[x] = EditorGUILayout.Slider("Density: ",currentGroupScript.objProb[x], 0.0f, 1.0f);
+
+							currentGroupScript.objPosOff[x] = EditorGUILayout.Vector3Field("Position Offset",currentGroupScript.objPosOff[x]);
+							currentGroupScript.objPosNoise[x] = EditorGUILayout.Vector3Field("Position Noise",currentGroupScript.objPosNoise[x]);
+							currentGroupScript.objRotOff[x] = EditorGUILayout.Vector3Field("Rotation Offset",currentGroupScript.objRotOff[x]);
+							currentGroupScript.objRotNoise[x] = EditorGUILayout.Vector3Field("Rotation Noise",currentGroupScript.objRotNoise[x]);
+							currentGroupScript.objScaleOff[x] = EditorGUILayout.Vector3Field("Scale Offset",currentGroupScript.objScaleOff[x]);
+							currentGroupScript.objScaleNoise[x] = EditorGUILayout.Vector3Field("Scale Noise",currentGroupScript.objScaleNoise[x]);
 							///
 
 							if(GUILayout.Button ("REMOVE")) {
