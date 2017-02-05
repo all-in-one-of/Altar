@@ -168,7 +168,9 @@ class GeoPainterEditor extends Editor {
 				//Elements
 				var x : int = 0;
 				if(GUILayout.Button ("ADD OBJECT")) {
+
 				///
+
 					currentGroupScript.objProb.Add(1.0f);
 					currentGroupScript.objPosOff.Add(new Vector3(0.0f, 0.0f, 0.0f));
 					currentGroupScript.objPosNoise.Add(new Vector3(0.0f, 0.0f, 0.0f));
@@ -176,6 +178,8 @@ class GeoPainterEditor extends Editor {
 					currentGroupScript.objRotNoise.Add(new Vector3(0.0f, 0.0f, 0.0f));
 					currentGroupScript.objScaleOff.Add(new Vector3(0.0f, 0.0f, 0.0f));
 					currentGroupScript.objScaleNoise.Add(new Vector3(0.0f, 0.0f, 0.0f));
+					currentGroupScript.objScaleUniform.Add(false);
+
 				///
 
 					myLibrary.Add(null);
@@ -197,6 +201,7 @@ class GeoPainterEditor extends Editor {
 							currentGroupScript.objRotNoise[x] = EditorGUILayout.Vector3Field("Rotation Noise",currentGroupScript.objRotNoise[x]);
 							currentGroupScript.objScaleOff[x] = EditorGUILayout.Vector3Field("Scale Offset",currentGroupScript.objScaleOff[x]);
 							currentGroupScript.objScaleNoise[x] = EditorGUILayout.Vector3Field("Scale Noise",currentGroupScript.objScaleNoise[x]);
+							currentGroupScript.objScaleUniform[x] = EditorGUILayout.Toggle("Uniform:", currentGroupScript.objScaleUniform[x]);
 							///
 
 							if(GUILayout.Button ("REMOVE")) {
@@ -211,6 +216,7 @@ class GeoPainterEditor extends Editor {
 								currentGroupScript.objRotNoise.RemoveAt(x);
 								currentGroupScript.objScaleOff.RemoveAt(x);
 								currentGroupScript.objScaleNoise.RemoveAt(x);
+								currentGroupScript.objScaleUniform.RemoveAt(x);
 								///
 
 								currentGroupScript.myLibraryBuiltIn = myLibrary.ToBuiltin(GameObject);
@@ -336,18 +342,21 @@ class GeoPainterEditor extends Editor {
 				
 			}
 			//RandomSection
+
 			EditorGUILayout.Space();
 			EditorGUILayout.Space();
 			EditorGUILayout.Space();
 			showRandom = EditorGUILayout.Foldout(showRandom, "RANDOMIZE",EditorStyles.boldLabel );
 			if(showRandom && !isPainting)
 			{
-			EditorGUILayout.Space();
-			EditorGUILayout.Space();
-			EditorGUILayout.Space();
+				
+				EditorGUILayout.Space();
+				EditorGUILayout.Space();
+				EditorGUILayout.Space();
 				currentGroupScript.rndSeed = EditorGUILayout.IntSlider("Seed: ",currentGroupScript.rndSeed, 1, 12600);
 				
 				//POSITION
+				/*
 				EditorGUILayout.Space();
 				GUILayout.Label("POSITION",EditorStyles.boldLabel);
 				EditorGUILayout.Space();
@@ -381,54 +390,13 @@ class GeoPainterEditor extends Editor {
 						currentGroupScript.rndPosMaxZ = EditorGUILayout.FloatField("",currentGroupScript.rndPosMaxZ,GUILayout.Width(200));
 					EditorGUILayout.EndVertical();
 				
-				EditorGUILayout.EndHorizontal();
+					EditorGUILayout.EndHorizontal();
 				
-				//ROTATION
-				EditorGUILayout.Space();
-				GUILayout.Label("ROTATION",EditorStyles.boldLabel);
-				EditorGUILayout.Space();
-				
-				EditorGUILayout.BeginHorizontal();
-				EditorGUILayout.BeginVertical();
-				EditorGUILayout.LabelField("","",GUILayout.Width(3));
-				EditorGUILayout.LabelField("x:","",GUILayout.Width(3));
-				EditorGUILayout.LabelField("y:","",GUILayout.Width(3));
-				EditorGUILayout.LabelField("z:","",GUILayout.Width(3));
-				EditorGUILayout.EndVertical();
-				
-				EditorGUILayout.BeginVertical();
-				EditorGUILayout.LabelField("","Offset",GUILayout.Width(200));
-				currentGroupScript.offRotX = EditorGUILayout.FloatField("",currentGroupScript.offRotX,GUILayout.Width(200));
-				currentGroupScript.offRotY = EditorGUILayout.FloatField("",currentGroupScript.offRotY,GUILayout.Width(200));
-				currentGroupScript.offRotZ = EditorGUILayout.FloatField("",currentGroupScript.offRotZ,GUILayout.Width(200));
-				EditorGUILayout.EndVertical();
-				
-				EditorGUILayout.BeginVertical();
-				EditorGUILayout.LabelField("","Random Min",GUILayout.Width(200));
-				currentGroupScript.rndRotMinX = EditorGUILayout.FloatField("",currentGroupScript.rndRotMinX,GUILayout.Width(200));
-				currentGroupScript.rndRotMinY = EditorGUILayout.FloatField("",currentGroupScript.rndRotMinY,GUILayout.Width(200));
-				currentGroupScript.rndRotMinZ = EditorGUILayout.FloatField("",currentGroupScript.rndRotMinZ,GUILayout.Width(200));
-				EditorGUILayout.EndVertical();
-				
-				EditorGUILayout.BeginVertical();
-				EditorGUILayout.LabelField("","Random Max",GUILayout.Width(200));
-				currentGroupScript.rndRotMaxX = EditorGUILayout.FloatField("",currentGroupScript.rndRotMaxX,GUILayout.Width(200));
-				currentGroupScript.rndRotMaxY = EditorGUILayout.FloatField("",currentGroupScript.rndRotMaxY,GUILayout.Width(200));
-				currentGroupScript.rndRotMaxZ = EditorGUILayout.FloatField("",currentGroupScript.rndRotMaxZ,GUILayout.Width(200));
-				EditorGUILayout.EndVertical();
-				
-				EditorGUILayout.EndHorizontal();
-				
-				
-				//Scale
-				
-				EditorGUILayout.Space();
-				GUILayout.Label("SCALE",EditorStyles.boldLabel);
-				EditorGUILayout.Space();
-				currentGroupScript.scaleUniform = EditorGUILayout.Toggle("Uniform:", currentGroupScript.scaleUniform );
-				
-				if(!currentGroupScript.scaleUniform)
-				{
+					//ROTATION
+					EditorGUILayout.Space();
+					GUILayout.Label("ROTATION",EditorStyles.boldLabel);
+					EditorGUILayout.Space();
+					
 					EditorGUILayout.BeginHorizontal();
 					EditorGUILayout.BeginVertical();
 					EditorGUILayout.LabelField("","",GUILayout.Width(3));
@@ -436,50 +404,93 @@ class GeoPainterEditor extends Editor {
 					EditorGUILayout.LabelField("y:","",GUILayout.Width(3));
 					EditorGUILayout.LabelField("z:","",GUILayout.Width(3));
 					EditorGUILayout.EndVertical();
-				
+					
 					EditorGUILayout.BeginVertical();
 					EditorGUILayout.LabelField("","Offset",GUILayout.Width(200));
-					currentGroupScript.offSclX = EditorGUILayout.FloatField("",currentGroupScript.offSclX,GUILayout.Width(200));
-					currentGroupScript.offSclY = EditorGUILayout.FloatField("",currentGroupScript.offSclY,GUILayout.Width(200));
-					currentGroupScript.offSclZ = EditorGUILayout.FloatField("",currentGroupScript.offSclZ,GUILayout.Width(200));
+					currentGroupScript.offRotX = EditorGUILayout.FloatField("",currentGroupScript.offRotX,GUILayout.Width(200));
+					currentGroupScript.offRotY = EditorGUILayout.FloatField("",currentGroupScript.offRotY,GUILayout.Width(200));
+					currentGroupScript.offRotZ = EditorGUILayout.FloatField("",currentGroupScript.offRotZ,GUILayout.Width(200));
 					EditorGUILayout.EndVertical();
 					
 					EditorGUILayout.BeginVertical();
 					EditorGUILayout.LabelField("","Random Min",GUILayout.Width(200));
-					currentGroupScript.rndSclMinX = EditorGUILayout.FloatField("",currentGroupScript.rndSclMinX,GUILayout.Width(200));
-					currentGroupScript.rndSclMinY = EditorGUILayout.FloatField("",currentGroupScript.rndSclMinY,GUILayout.Width(200));
-					currentGroupScript.rndSclMinZ = EditorGUILayout.FloatField("",currentGroupScript.rndSclMinZ,GUILayout.Width(200));
+					currentGroupScript.rndRotMinX = EditorGUILayout.FloatField("",currentGroupScript.rndRotMinX,GUILayout.Width(200));
+					currentGroupScript.rndRotMinY = EditorGUILayout.FloatField("",currentGroupScript.rndRotMinY,GUILayout.Width(200));
+					currentGroupScript.rndRotMinZ = EditorGUILayout.FloatField("",currentGroupScript.rndRotMinZ,GUILayout.Width(200));
 					EditorGUILayout.EndVertical();
 					
 					EditorGUILayout.BeginVertical();
 					EditorGUILayout.LabelField("","Random Max",GUILayout.Width(200));
-					currentGroupScript.rndSclMaxX = EditorGUILayout.FloatField("",currentGroupScript.rndSclMaxX,GUILayout.Width(200));
-					currentGroupScript.rndSclMaxY = EditorGUILayout.FloatField("",currentGroupScript.rndSclMaxY,GUILayout.Width(200));
-					currentGroupScript.rndSclMaxZ = EditorGUILayout.FloatField("",currentGroupScript.rndSclMaxZ,GUILayout.Width(200));
+					currentGroupScript.rndRotMaxX = EditorGUILayout.FloatField("",currentGroupScript.rndRotMaxX,GUILayout.Width(200));
+					currentGroupScript.rndRotMaxY = EditorGUILayout.FloatField("",currentGroupScript.rndRotMaxY,GUILayout.Width(200));
+					currentGroupScript.rndRotMaxZ = EditorGUILayout.FloatField("",currentGroupScript.rndRotMaxZ,GUILayout.Width(200));
 					EditorGUILayout.EndVertical();
 					
 					EditorGUILayout.EndHorizontal();
-				} else
-				{
-					EditorGUILayout.BeginVertical();
-					EditorGUILayout.BeginHorizontal();
-					EditorGUILayout.LabelField("","",GUILayout.Width(30));
-					EditorGUILayout.LabelField("","Offset",GUILayout.Width(200));
-					EditorGUILayout.LabelField("","Random Min",GUILayout.Width(200));
-					EditorGUILayout.LabelField("","Random Max",GUILayout.Width(200));
-					EditorGUILayout.EndHorizontal();
-					
-					EditorGUILayout.BeginHorizontal();
-					EditorGUILayout.LabelField("All:","",GUILayout.Width(30));
-					currentGroupScript.offSclX = EditorGUILayout.FloatField("",currentGroupScript.offSclX,GUILayout.Width(200));
-					currentGroupScript.rndSclMinX = EditorGUILayout.FloatField("",currentGroupScript.rndSclMinX,GUILayout.Width(200));
-					currentGroupScript.rndSclMaxX = EditorGUILayout.FloatField("",currentGroupScript.rndSclMaxX,GUILayout.Width(200));
-					
-					
-					EditorGUILayout.EndVertical();
-					EditorGUILayout.EndHorizontal();
-				}
+
 				
+					//Scale
+					
+					EditorGUILayout.Space();
+					GUILayout.Label("SCALE",EditorStyles.boldLabel);
+					EditorGUILayout.Space();
+					currentGroupScript.scaleUniform = EditorGUILayout.Toggle("Uniform:", currentGroupScript.scaleUniform );
+
+					if(!currentGroupScript.scaleUniform)
+					{
+						EditorGUILayout.BeginHorizontal();
+						EditorGUILayout.BeginVertical();
+						EditorGUILayout.LabelField("","",GUILayout.Width(3));
+						EditorGUILayout.LabelField("x:","",GUILayout.Width(3));
+						EditorGUILayout.LabelField("y:","",GUILayout.Width(3));
+						EditorGUILayout.LabelField("z:","",GUILayout.Width(3));
+						EditorGUILayout.EndVertical();
+					
+						EditorGUILayout.BeginVertical();
+						EditorGUILayout.LabelField("","Offset",GUILayout.Width(200));
+						currentGroupScript.offSclX = EditorGUILayout.FloatField("",currentGroupScript.offSclX,GUILayout.Width(200));
+						currentGroupScript.offSclY = EditorGUILayout.FloatField("",currentGroupScript.offSclY,GUILayout.Width(200));
+						currentGroupScript.offSclZ = EditorGUILayout.FloatField("",currentGroupScript.offSclZ,GUILayout.Width(200));
+						EditorGUILayout.EndVertical();
+						
+						EditorGUILayout.BeginVertical();
+						EditorGUILayout.LabelField("","Random Min",GUILayout.Width(200));
+						currentGroupScript.rndSclMinX = EditorGUILayout.FloatField("",currentGroupScript.rndSclMinX,GUILayout.Width(200));
+						currentGroupScript.rndSclMinY = EditorGUILayout.FloatField("",currentGroupScript.rndSclMinY,GUILayout.Width(200));
+						currentGroupScript.rndSclMinZ = EditorGUILayout.FloatField("",currentGroupScript.rndSclMinZ,GUILayout.Width(200));
+						EditorGUILayout.EndVertical();
+						
+						EditorGUILayout.BeginVertical();
+						EditorGUILayout.LabelField("","Random Max",GUILayout.Width(200));
+						currentGroupScript.rndSclMaxX = EditorGUILayout.FloatField("",currentGroupScript.rndSclMaxX,GUILayout.Width(200));
+						currentGroupScript.rndSclMaxY = EditorGUILayout.FloatField("",currentGroupScript.rndSclMaxY,GUILayout.Width(200));
+						currentGroupScript.rndSclMaxZ = EditorGUILayout.FloatField("",currentGroupScript.rndSclMaxZ,GUILayout.Width(200));
+						EditorGUILayout.EndVertical();
+						
+						EditorGUILayout.EndHorizontal();
+					} 
+
+					else
+					{
+						EditorGUILayout.BeginVertical();
+						EditorGUILayout.BeginHorizontal();
+						EditorGUILayout.LabelField("","",GUILayout.Width(30));
+						EditorGUILayout.LabelField("","Offset",GUILayout.Width(200));
+						EditorGUILayout.LabelField("","Random Min",GUILayout.Width(200));
+						EditorGUILayout.LabelField("","Random Max",GUILayout.Width(200));
+						EditorGUILayout.EndHorizontal();
+						
+						EditorGUILayout.BeginHorizontal();
+						EditorGUILayout.LabelField("All:","",GUILayout.Width(30));
+						currentGroupScript.offSclX = EditorGUILayout.FloatField("",currentGroupScript.offSclX,GUILayout.Width(200));
+						currentGroupScript.rndSclMinX = EditorGUILayout.FloatField("",currentGroupScript.rndSclMinX,GUILayout.Width(200));
+						currentGroupScript.rndSclMaxX = EditorGUILayout.FloatField("",currentGroupScript.rndSclMaxX,GUILayout.Width(200));
+						
+						
+						EditorGUILayout.EndVertical();
+						EditorGUILayout.EndHorizontal();
+					}
+					*/
 				
 				//AUTO
 				EditorGUILayout.Space();
@@ -528,8 +539,18 @@ class GeoPainterEditor extends Editor {
 	{
 		myTempScript = myGroups[copyFromIndex].GetComponent("GeoPainterGroup");
 		
-
+		///
 		currentGroupScript.objProb = myTempScript.objProb;
+
+		currentGroupScript.objPosOff = myTempScript.objPosOff;
+		currentGroupScript.objPosNoise = myTempScript.objPosNoise;
+		currentGroupScript.objRotOff = myTempScript.objRotOff;
+		currentGroupScript.objRotNoise = myTempScript.objRotNoise;
+		currentGroupScript.objScaleOff = myTempScript.objScaleOff;
+		currentGroupScript.objScaleNoise = myTempScript.objScaleNoise;
+		currentGroupScript.objScaleUniform = myTempScript.objScaleUniform;
+		///
+
 
 		currentGroupScript.rndSeed = myTempScript.rndSeed;
 		currentGroupScript.offPosX  = myTempScript.offPosX;
@@ -694,7 +715,7 @@ class GeoPainterEditor extends Editor {
 		tmpSclX = currentGroupScript.objScaleOff[objNum].x + Random.Range(-currentGroupScript.objScaleNoise[objNum].x, currentGroupScript.objScaleNoise[objNum].x);
 		tmpSclY = currentGroupScript.objScaleOff[objNum].y + Random.Range(-currentGroupScript.objScaleNoise[objNum].y, currentGroupScript.objScaleNoise[objNum].y);
 		tmpSclZ = currentGroupScript.objScaleOff[objNum].z + Random.Range(-currentGroupScript.objScaleNoise[objNum].z, currentGroupScript.objScaleNoise[objNum].z);
-		if(!currentGroupScript.scaleUniform)
+		if(!currentGroupScript.objScaleUniform[objNum])
 		{
 			obj.localScale += Vector3(tmpSclX, tmpSclY, tmpSclZ);
 		} else

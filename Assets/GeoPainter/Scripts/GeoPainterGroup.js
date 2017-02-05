@@ -15,6 +15,7 @@ class GeoPainterGroup extends MonoBehaviour
 	var objRotNoise: List.<Vector3> = new List.<Vector3>([new Vector3(0.0f, 0.0f, 0.0f)]);
 	var objScaleOff: List.<Vector3> = new List.<Vector3>([new Vector3(0.0f, 0.0f, 0.0f)]);
 	var objScaleNoise: List.<Vector3> = new List.<Vector3>([new Vector3(0.0f, 0.0f, 0.0f)]);
+	var objScaleUniform: List.<boolean> = new List.<boolean>([false]);
 
 	//Position
 	var offPosX : float = 0.0;
