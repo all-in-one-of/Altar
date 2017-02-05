@@ -3,15 +3,18 @@ class GeoPainterGroup extends MonoBehaviour
 {
 	var myLibraryBuiltIn : GameObject[] ;
 	var rndSeed : int = 1;
-	
+
 	@SerializeField
 	var myPointsList : List.<GeoPainterPoint> = new List.<GeoPainterPoint>();
 
 	var objProb: List.<float> = new List.<float>([1.0f]);
-	//objProb.Add(1.0f);
 
-	//var objProb = new Array(1.0f, 1.0f, 1.0f, 1.0f);
-
+	var objPosOff: List.<Vector3> = new List.<Vector3>([new Vector3(0.0f, 0.0f, 0.0f)]);
+	var objPosNoise: List.<Vector3> = new List.<Vector3>([new Vector3(0.0f, 0.0f, 0.0f)]);
+	var objRotOff: List.<Vector3> = new List.<Vector3>([new Vector3(0.0f, 0.0f, 0.0f)]);
+	var objRotNoise: List.<Vector3> = new List.<Vector3>([new Vector3(0.0f, 0.0f, 0.0f)]);
+	var objScaleOff: List.<Vector3> = new List.<Vector3>([new Vector3(0.0f, 0.0f, 0.0f)]);
+	var objScaleNoise: List.<Vector3> = new List.<Vector3>([new Vector3(0.0f, 0.0f, 0.0f)]);
 
 	//Position
 	var offPosX : float = 0.0;

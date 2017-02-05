@@ -170,6 +170,12 @@ class GeoPainterEditor extends Editor {
 				if(GUILayout.Button ("ADD OBJECT")) {
 				///
 					currentGroupScript.objProb.Add(1.0f);
+					currentGroupScript.objPosOff.Add(new Vector3(0.0f, 0.0f, 0.0f));
+					currentGroupScript.objPosNoise.Add(new Vector3(0.0f, 0.0f, 0.0f));
+					currentGroupScript.objRotOff.Add(new Vector3(0.0f, 0.0f, 0.0f));
+					currentGroupScript.objRotNoise.Add(new Vector3(0.0f, 0.0f, 0.0f));
+					currentGroupScript.objScaleOff.Add(new Vector3(1.0f, 1.0f, 1.0f));
+					currentGroupScript.objScaleNoise.Add(new Vector3(0.0f, 0.0f, 0.0f));
 				///
 
 					myLibrary.Add(null);
@@ -188,7 +194,15 @@ class GeoPainterEditor extends Editor {
 
 							if(GUILayout.Button ("REMOVE")) {
 								myLibrary.RemoveAt(x);
+								///
 								currentGroupScript.objProb.RemoveAt(x);
+								currentGroupScript.objPosOff.RemoveAt(x);
+								currentGroupScript.objPosNoise.RemoveAt(x);
+								currentGroupScript.objRotOff.RemoveAt(x);
+								currentGroupScript.objRotNoise.RemoveAt(x);
+								currentGroupScript.objScaleOff.RemoveAt(x);
+								currentGroupScript.objScaleNoise.RemoveAt(x);
+								///
 								currentGroupScript.myLibraryBuiltIn = myLibrary.ToBuiltin(GameObject);
 								break;
 							}
