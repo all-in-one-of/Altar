@@ -1,6 +1,7 @@
 class GeoPainterPoint extends System.Object
 {
 	public var go : GameObject;
+	public var objNum : int;
 	public var pos : Vector3;
 	public var scale : Vector3;
 	public var normal : Vector3;

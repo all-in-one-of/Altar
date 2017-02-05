@@ -51,7 +51,7 @@ class GeoPainterGroup extends MonoBehaviour
 	var rndSclMaxZ : float = 0.0;
 	
 	
-	function addObject(_go : GameObject, _pos : Vector3, _scale : Vector3, _normal : Vector3, _useNormal : boolean)
+	function addObject(_go : GameObject, _pos : Vector3, _scale : Vector3, _normal : Vector3, _useNormal : boolean, objNum: int)
 	{
 		var myNewPoint : GeoPainterPoint = new GeoPainterPoint();
 		myNewPoint.go = _go;
@@ -59,6 +59,7 @@ class GeoPainterGroup extends MonoBehaviour
 		myNewPoint.scale = _scale;
 		myNewPoint.normal = _normal;
 		myNewPoint.useNormal = _useNormal;
+		myNewPoint.objNum = objNum;
 		myPointsList.Add(myNewPoint);
 	}
 	

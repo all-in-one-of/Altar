@@ -174,7 +174,7 @@ class GeoPainterEditor extends Editor {
 					currentGroupScript.objPosNoise.Add(new Vector3(0.0f, 0.0f, 0.0f));
 					currentGroupScript.objRotOff.Add(new Vector3(0.0f, 0.0f, 0.0f));
 					currentGroupScript.objRotNoise.Add(new Vector3(0.0f, 0.0f, 0.0f));
-					currentGroupScript.objScaleOff.Add(new Vector3(1.0f, 1.0f, 1.0f));
+					currentGroupScript.objScaleOff.Add(new Vector3(0.0f, 0.0f, 0.0f));
 					currentGroupScript.objScaleNoise.Add(new Vector3(0.0f, 0.0f, 0.0f));
 				///
 
@@ -201,8 +201,10 @@ class GeoPainterEditor extends Editor {
 
 							if(GUILayout.Button ("REMOVE")) {
 								myLibrary.RemoveAt(x);
+
 								///
 								currentGroupScript.objProb.RemoveAt(x);
+
 								currentGroupScript.objPosOff.RemoveAt(x);
 								currentGroupScript.objPosNoise.RemoveAt(x);
 								currentGroupScript.objRotOff.RemoveAt(x);
@@ -210,6 +212,7 @@ class GeoPainterEditor extends Editor {
 								currentGroupScript.objScaleOff.RemoveAt(x);
 								currentGroupScript.objScaleNoise.RemoveAt(x);
 								///
+
 								currentGroupScript.myLibraryBuiltIn = myLibrary.ToBuiltin(GameObject);
 								break;
 							}
@@ -661,7 +664,9 @@ class GeoPainterEditor extends Editor {
 	{
 		//Random.seed = currentGroupScript.rndSeed;
 		var obj : Transform = element.go.transform;
-		
+
+		var objNum = element.objNum;
+
 		var myRot = Quaternion.identity;
 		if(element.useNormal)
 		{
@@ -673,22 +678,22 @@ class GeoPainterEditor extends Editor {
 		obj.localScale = element.scale;
 
 		//Position
-		tmpPosX = currentGroupScript.offPosX + Random.Range(currentGroupScript.rndPosMinX, currentGroupScript.rndPosMaxX);
-		tmpPosY = currentGroupScript.offPosY + Random.Range(currentGroupScript.rndPosMinY, currentGroupScript.rndPosMaxY);
-		tmpPosZ = currentGroupScript.offPosZ + Random.Range(currentGroupScript.rndPosMinZ, currentGroupScript.rndPosMaxZ);
+		tmpPosX = currentGroupScript.objPosOff[objNum].x + Random.Range(-currentGroupScript.objPosNoise[objNum].x, currentGroupScript.objPosNoise[objNum].x);
+		tmpPosY = currentGroupScript.objPosOff[objNum].y + Random.Range(-currentGroupScript.objPosNoise[objNum].y, currentGroupScript.objPosNoise[objNum].y);
+		tmpPosZ = currentGroupScript.objPosOff[objNum].z + Random.Range(-currentGroupScript.objPosNoise[objNum].z, currentGroupScript.objPosNoise[objNum].z);
 		obj.Translate(tmpPosX, tmpPosY, tmpPosZ);
 		
 		//Rotation
-		tmpRotX = currentGroupScript.offRotX + Random.Range(currentGroupScript.rndRotMinX, currentGroupScript.rndRotMaxX);
-		tmpRotY = currentGroupScript.offRotY + Random.Range(currentGroupScript.rndRotMinY, currentGroupScript.rndRotMaxY);
-		tmpRotZ = currentGroupScript.offRotZ + Random.Range(currentGroupScript.rndRotMinZ, currentGroupScript.rndRotMaxZ);
+		tmpRotX = currentGroupScript.objRotOff[objNum].x + Random.Range(-currentGroupScript.objRotNoise[objNum].x, currentGroupScript.objRotNoise[objNum].x);
+		tmpRotY = currentGroupScript.objRotOff[objNum].y + Random.Range(-currentGroupScript.objRotNoise[objNum].y, currentGroupScript.objRotNoise[objNum].y);
+		tmpRotZ = currentGroupScript.objRotOff[objNum].z + Random.Range(-currentGroupScript.objRotNoise[objNum].z, currentGroupScript.objRotNoise[objNum].z);
 		obj.Rotate(tmpRotX, tmpRotY, tmpRotZ);
 		
 		//Scale
 
-		tmpSclX = currentGroupScript.offSclX + Random.Range(currentGroupScript.rndSclMinX, currentGroupScript.rndSclMaxX);
-		tmpSclY = currentGroupScript.offSclY + Random.Range(currentGroupScript.rndSclMinY, currentGroupScript.rndSclMaxY);
-		tmpSclZ = currentGroupScript.offSclZ + Random.Range(currentGroupScript.rndSclMinZ, currentGroupScript.rndSclMaxZ);
+		tmpSclX = currentGroupScript.objScaleOff[objNum].x + Random.Range(-currentGroupScript.objScaleNoise[objNum].x, currentGroupScript.objScaleNoise[objNum].x);
+		tmpSclY = currentGroupScript.objScaleOff[objNum].y + Random.Range(-currentGroupScript.objScaleNoise[objNum].y, currentGroupScript.objScaleNoise[objNum].y);
+		tmpSclZ = currentGroupScript.objScaleOff[objNum].z + Random.Range(-currentGroupScript.objScaleNoise[objNum].z, currentGroupScript.objScaleNoise[objNum].z);
 		if(!currentGroupScript.scaleUniform)
 		{
 			obj.localScale += Vector3(tmpSclX, tmpSclY, tmpSclZ);
@@ -805,7 +810,7 @@ class GeoPainterEditor extends Editor {
 				myObjToInstArray.Add(newObj);
 				
 				//Update Points Array
-				currentGroupScript.addObject(newObj,hit.point,newObj.transform.localScale,hit.normal,target.useNormal);
+				currentGroupScript.addObject(newObj,hit.point,newObj.transform.localScale,hit.normal,target.useNormal, myRandom);
 				
 				//Update Position Pivot
 				if(currentGroup.transform.childCount == 0)
